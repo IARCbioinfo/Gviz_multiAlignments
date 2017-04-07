@@ -51,6 +51,7 @@ For the other organisms the packages needs to have the same nomenclature as the 
 
 The name of the reference genome as to be the same as the BSgenome data package name without "BSgenome.", for the UCSC version of the reference Human genome hg19, one needs to set --ref_genome to "*Hsapiens.UCSC.hg19*".
 
+![Example of an alignment plot](alignmentsPlot.png "Example of an alignment plot")
 
 #### The alignment plot from top to bottom :
 
