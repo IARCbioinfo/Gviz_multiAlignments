@@ -144,7 +144,7 @@ for(i in 1:nrow(graphs)){
   }
 
   pdf(paste0(chr,":",pos,"_",paste(bams, collapse = '_'),".pdf"),11,12)
-  plotGviz(sTrack,ref_genome,txdb,annotation,UCSC,chr,pos,bams,bam_folder,w=50,w_zoomout=1000,paired=TRUE,nb_toplot=5)
+  plotGviz(sTrack,ref_genome,txdb,annotation,UCSC,chr,pos,bams,bam_folder)
   dev.off()
   
 }
