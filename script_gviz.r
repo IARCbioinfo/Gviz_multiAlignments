@@ -62,7 +62,7 @@ get_htTrack <- function(bams,bam_folder,plot_grtracks,sTrack,grtrack,chr,pos,pai
 #plot alignments
 plotGviz <- function(sTrack,ref_genome,txdb,annotation,chr,pos,bams,bam_folder,w=50,w_zoomout=1000,paired=FALSE,nb_toplot=5){
  
-  chr_annotation=get_UCSC_correpondance(chr,ref_genome)
+  chr_annotation=get_UCSC_associations(chr,ref_genome)
   if(chr_annotation==""){ #if the chromosome name is not recognized, the annotations will not be added
     only_alignment=TRUE
   }else{
@@ -147,8 +147,8 @@ get_bam_file_names<- function(bams,sample_names){
   }
 }
 
-#get UCSC chromosome correspondances
-get_UCSC_correpondance<- function(chr,ref_genome){
+#get UCSC chromosome associations
+get_UCSC_associations<- function(chr,ref_genome){
   convert_table=read.table(paste(paste0(unlist(strsplit(ref_genome,"[.]"))[3],"_chromosomeNames2UCSC.txt"),sep=""),head=FALSE,fill = TRUE)
   if(length(which(convert_table$V1==chr))==0){
     return("")
