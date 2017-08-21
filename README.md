@@ -1,17 +1,21 @@
 # Gviz_multiAlignments
 R script for multiple BAM alignments viewing using Gviz (bioconductor package)
 
-## Command line example:
-```
-Rscript script_gviz.r --pos_file=file_name.txt --bam_folder=/path_to_BAMs/ --ref_genome=Hsapiens.UCSC.hg19 --sample_names=SAMPLE
-```
-Arguments :
+## Parameters
 
-| Parameter | Default value | Description |
+  * #### Mandatory
+  
+| Name | Default value | Description |
 |-----------|--------------:|-------------|
 | bam_folder    |            - | Folder containing all BAMs needed |
-| pos_file | - |  Input file |
-| ref_genome | - | String defining the reference genome used for alignment |
+| pos_file | - |  File containing the position and samples to consider for the plot |
+| ref | - |  A reference [fasta file](https://en.wikipedia.org/wiki/FASTA_format) |
+| genome_release | - | Genome release needed for the annotations |
+
+  * #### Optional
+
+| Name | Default value | Description |
+|-----------|--------------:|-------------|
 | sample_names | FILE | Set this argument to "SAMPLE" if the input file contains the samples names extracted from the BAM files and not the BAM files names |
 
 #### Example of an input file (pos_file argument)
@@ -23,33 +27,26 @@ Arguments :
 
 Using this input file, the R script will generate 3 pdf files, each pdf file containing the alignment of the BAM file(s) at each position.  
 
-#### Bioconductor packages to install for plotting the alignments :
+## Usage
+```
+Rscript script_gviz.r --pos_file=file_name.txt --bam_folder=/path_to_BAMs/ --ref=fasta_file.fa --genome_release=Hsapiens.UCSC.hg19 --sample_names=SAMPLE
+```
+
+## Detailed description
+
+Bioconductor packages to install for plotting the alignments :
 
 - The [Gviz](https://bioconductor.org/packages/release/bioc/html/Gviz.html) package
-- A [BSgenome data package](https://bioconductor.org/packages/release/BiocViews.html#___BSgenome) to provide a full genome sequence. This sequence can be, for Homo sapiens, provided by UCSC or based on NCBI GRCh37 for the 1000genomes Reference Genome Sequence ([hs37d5](https://bioconductor.org/packages/release/data/annotation/html/BSgenome.Hsapiens.1000genomes.hs37d5.html)). 
 - An [Annotation package for TxDb objects](http://bioconductor.org/packages/release/BiocViews.html#___TxDb).
-- A [Genome wide annotation](https://bioconductor.org/packages/release/BiocViews.html#___OrgDb), it contains mappings between Entrez Gene identifiers and GenBank accession numbers. Examples : the Genome wide annotation package for Human : *org.Hs.eg.db* and for the mouse : *org.Mm.eg.db*.
+- A [Genome wide annotation](https://bioconductor.org/packages/release/BiocViews.html#___OrgDb), it contains mappings between Entrez Gene identifiers and GenBank accession numbers. Examples: the Genome wide annotation package for Human: *`org.Hs.eg.db`* and for the mouse: *`org.Mm.eg.db`*.
 
-Examples :
+Example: If the hg19 release of the human genome is used, the following packages should be installed: *`Gviz`*, *`TxDb.Hsapiens.UCSC.hg19.knownGene`* (hg18 and hg38 UCSC version can also be used) and *`org.Hs.eg.db`*
 
-If one needs the UCSC version of the reference Human genome hg19, the fowolling packages should be installed : 
-- *Gviz*
-- *BSgenome.Hsapiens.UCSC.hg19* (hg18 and hg38 UCSC version can also be used)
-- *TxDb.Hsapiens.UCSC.hg19.knownGene* 
-- *org.Hs.eg.db* 
+These packages exist for other organisms than Human but have not been tested. One can for example generate the alignments plot for mouse data by installing *`TxDb.Mmusculus.UCSC.mm10.knownGene`* (mm9 UCSC version can also be used) and *`org.Mm.eg.db`*. For the other organisms the packages need to have the same nomenclature as the ones listed above.
 
-These packages exist for other organisms than Human but have not been tested.
+The `--genome_release` option needs to be provided and corresponds to the TxDb annotation package name without its prefix and suffix. For the hg19 release of the human genome, one needs to set `--genome_release` to *`Hsapiens.UCSC.hg19`*.
+Note that the packages chosen for the annotations are compatible with the UCSC notations since most of the Gviz fonctionalities can handle these notations. The reference genome used for the BAM alignments can be based on GENCODE, UCSC or ENSEMBL genome varieties.
 
-One can for example generate the alignments plot for data issued from the mouse by installing : 
-- *BSgenome.Mmusculus.UCSC.mm10* (mm9 UCSC version can also be used)
-- *TxDb.Mmusculus.UCSC.mm10.knownGene*  
-- *org.Mm.eg.db*
-
-For the other organisms the packages needs to have the same nomenclature as the ones listed above.
-
-#### --ref_genome argument :
-
-The name of the reference genome as to be the same as the BSgenome data package name without "BSgenome.", for the UCSC version of the reference Human genome hg19, one needs to set --ref_genome to "*Hsapiens.UCSC.hg19*".
 
 ![Example of an alignment plot](alignmentsPlot.png "Example of an alignment plot")
 
